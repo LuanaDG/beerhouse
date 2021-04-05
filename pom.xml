@@ -6,11 +6,11 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.beerhouse</groupId>
-	<artifactId>craft-beer</artifactId>
+	<artifactId>beer-house</artifactId>
 	<version>1.0</version>
 	<packaging>jar</packaging>
 
-	<name>Craft Beer</name>
+	<name>Craft Beer/Beer House</name>
 	<description>Manage craft beers</description>
 
 	<parent>

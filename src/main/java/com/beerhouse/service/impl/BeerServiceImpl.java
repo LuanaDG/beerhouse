@@ -1,5 +1,6 @@
 package com.beerhouse.service.impl;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 import javax.persistence.EntityNotFoundException;
@@ -32,6 +33,7 @@ public class BeerServiceImpl implements BeerService {
 	@Override
 	public Beer insertNewBeer(Beer beer) {
 		executeValidations(beer);
+		validateIfNameAlreadyExists(beer.getName());
 		return repository.save(beer);
 	}
 
@@ -53,6 +55,7 @@ public class BeerServiceImpl implements BeerService {
 				throw new ResourceNotFoundException("A cerveja com o ID:" + id + " não existe.");
 			}
 			executeValidations(beer);
+			validateIfNameAlreadyExists(beer.getName());
 			Beer entity = repository.getOne(id);
 			updateData(entity, beer);
 			return repository.save(entity);
@@ -70,28 +73,35 @@ public class BeerServiceImpl implements BeerService {
 		entity.setCategory(obj.getCategory());
 	}
 
-	
 	public Beer executeValidations(Beer beer) {
 
 		if (beer.getName() == null || beer.getName().trim().equals("")) {
-			throw new BusinessException("O campo Nome deve ser preenchido!.");
+			throw new BusinessException("O campo Nome deve ser preenchido!");
 		}
 		if (beer.getAlcoholContent() == null || beer.getAlcoholContent().trim().equals("")) {
-			throw new BusinessException("O campo Teor Alcólico deve ser preenchido!.");
+			throw new BusinessException("O campo Teor Alcólico deve ser preenchido!");
 		}
 		if (beer.getIngredients() == null || beer.getIngredients().trim().equals("")) {
-			throw new BusinessException("O campo Ingredientes deve ser preenchido!.");
+			throw new BusinessException("O campo Ingredientes deve ser preenchido!");
 		}
 		if (beer.getPrice() == null) {
-			throw new BusinessException("O campo Preço deve ser preenchido!.");
+			throw new BusinessException("O campo Preço deve ser preenchido!");
+		}
+		if (beer.getPrice().compareTo(BigDecimal.ZERO) <= 0 ) {
+			throw new BusinessException("O campo Preço deve ser maior que zero!");
 		}
 		if (beer.getCategory() == null || beer.getCategory().trim().equals("")) {
-			throw new BusinessException("O campo Categoria deve ser preenchido!.");
+			throw new BusinessException("O campo Categoria deve ser preenchido!");
 		}
 		
 		return beer;
-
 	}
 	
-	
+	@Override 
+	public void validateIfNameAlreadyExists(String name){
+		boolean alreadyExists = repository.existsByName(name);
+		if(alreadyExists) {
+			throw new BusinessException("Já existe uma cerveja cadastrada com este nome!");
+		}
+	}
 }

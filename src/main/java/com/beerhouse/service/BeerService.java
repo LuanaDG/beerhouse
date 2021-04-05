@@ -2,7 +2,6 @@ package com.beerhouse.service;
 
 import java.util.List;
 import java.util.Optional;
-
 import com.beerhouse.entity.Beer;
 
 public interface BeerService {
@@ -17,6 +16,6 @@ public interface BeerService {
 	
 	Beer updateBeer(Integer id, Beer obj);
 	
-	
+	void validateIfNameAlreadyExists (String name);
 	
 }

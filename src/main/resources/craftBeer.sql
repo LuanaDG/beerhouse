@@ -16,3 +16,11 @@ CREATE TABLE craftbeer.beer (
    category varchar(100) NOT NULL,
    PRIMARY KEY (id)
    );
+   
+   
+   
+-- INSERINDO ALGUNS ITENS: 
+
+INSERT INTO craftbeer.beer (name, ingredients, alcohol_content, price, category) VALUES('InNatura', 'trigo', '2.5%', '15', 'artesanal');
+INSERT INTO craftbeer.beer (name, ingredients, alcohol_content, price, category) VALUES('Viena', 'trigo', '3%', '12', 'artesanal');
+INSERT INTO craftbeer.beer (name, ingredients, alcohol_content, price, category) VALUES('Larger', 'malte', '4%', '15', 'artesanal');
